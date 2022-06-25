@@ -27,24 +27,15 @@ public class Hero : MonoBehaviour
     
     private void MovingEdgesScene()
     {
-        if (transform.position.y > 600)
-        {
-            transform.position = new Vector3(transform.position.x, -600, 0);
-        }
 
-        if (transform.position.y < -600)
+        if (transform.position.x < -2.5f)
         {
-            transform.position = new Vector3(transform.position.x, 600, 0);
-        }
-
-        if (transform.position.x < -9)
-        {
-            transform.position = new Vector3(9, transform.position.y, 0);
+            transform.position = new Vector3(2.5f, transform.position.y, 0);
         }
             
-        if (transform.position.x > 9)
+        if (transform.position.x > 2.5f)
         {
-            transform.position = new Vector3(-9, transform.position.y, 0);
+            transform.position = new Vector3(-2.5f, transform.position.y, 0);
         }
     }
 }
