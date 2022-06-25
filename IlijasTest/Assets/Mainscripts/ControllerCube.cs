@@ -47,11 +47,13 @@ public class ControllerCube : MonoBehaviour
         if (cube1.transform.position.y < -6)
         {
             cube1.transform.position = new Vector3( cube1.transform.position.x, 6, 0);
+            cube1.transform.position = new Vector3(random1 / 1000, cube.transform.position.y);
         }
         
         if (cube2.transform.position.y < -6)
         {
             cube2.transform.position = new Vector3( cube2.transform.position.x, 6, 0);
+            cube2.transform.position = new Vector3(random2 / 1000, cube.transform.position.y);
         }
         
     }
