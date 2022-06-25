@@ -14,6 +14,10 @@ public class Hero : MonoBehaviour
 
     void Update()
     {
+        
+        
+        
+        
         Move();
     }
 

@@ -6,10 +6,11 @@ using Random = System.Random;
 
 public class ControllerCube : MonoBehaviour
 {
-    public GameObject cube;
-    public GameObject cube1;
-    public GameObject cube2;
-    public float speed;
+    public GameObject cubePrefab;
+    public Transform spawnpoint;
+    private int _speed = 1;
+    private float _time = 1;
+    
     
     void Start()
     {
@@ -19,42 +20,16 @@ public class ControllerCube : MonoBehaviour
     
     void Update()
     {
-        MoveDown();
-    }
-
-    private void MoveDown()
-    {
-        Vector3 direction = new Vector3( 0, -1 * speed * Time.deltaTime);
-        cube.transform.Translate(direction);
-        cube1.transform.Translate(direction);
-        cube2.transform.Translate(direction);
-        MovingEdgesScene();
+        if (_time > 0)
+        {
+            _time -= Time.deltaTime * _speed;
+        }
+        else
+        {
+            Instantiate(cubePrefab, spawnpoint);
+            _time = 1;
+        }
     }
     
-    private void MovingEdgesScene()
-    {
-        Random rnd = new Random();
-        float random = rnd.Next(-2500, 2500);
-        float random1 = rnd.Next(-2500, 2500);
-        float random2 = rnd.Next(-2500, 2500);
-        
-        if (cube.transform.position.y < -6)
-        {
-            cube.transform.position = new Vector3( cube.transform.position.x, 6, 0);
-            cube.transform.position = new Vector3(random / 1000, cube.transform.position.y);
-        }
-        
-        if (cube1.transform.position.y < -6)
-        {
-            cube1.transform.position = new Vector3( cube1.transform.position.x, 6, 0);
-            cube1.transform.position = new Vector3(random1 / 1000, cube.transform.position.y);
-        }
-        
-        if (cube2.transform.position.y < -6)
-        {
-            cube2.transform.position = new Vector3( cube2.transform.position.x, 6, 0);
-            cube2.transform.position = new Vector3(random2 / 1000, cube.transform.position.y);
-        }
-        
-    }
+    
 }
