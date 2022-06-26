@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,19 +6,9 @@ using UnityEngine;
 public class Hero : MonoBehaviour
 {
     public float speed;
-
-    void Start()
-    {
-        
-    }
-
-
+    
     void Update()
     {
-        
-        
-        
-        
         Move();
     }
 
@@ -42,4 +33,13 @@ public class Hero : MonoBehaviour
             transform.position = new Vector3(-2.5f, transform.position.y, 0);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Time.timeScale = 0;
+        }
+    }
 }
+

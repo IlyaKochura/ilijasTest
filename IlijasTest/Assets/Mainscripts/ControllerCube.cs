@@ -7,28 +7,34 @@ using Random = System.Random;
 public class ControllerCube : MonoBehaviour
 {
     public GameObject cubePrefab;
-    public Transform spawnpoint;
-    private int _speed = 1;
-    private float _time = 1;
+    private Vector3 _spawnpoint;
+    private List<GameObject> _objects = new();
     
     
     void Start()
     {
-        
+        Random rnd = new Random();
+        _spawnpoint = new Vector3(0, 6);
+        for (int i = 0; i < 3; i++)
+        {
+            float random = rnd.Next(10, 20);
+            var slot = Instantiate(cubePrefab, _spawnpoint, Quaternion.identity);
+            _objects.Add(slot);
+            _objects[i].GetComponent<CubeScript>().speed = random;
+        }
     }
-
     
     void Update()
     {
-        if (_time > 0)
+        for (int i = 0; i < _objects.Count; i++)
         {
-            _time -= Time.deltaTime * _speed;
-        }
-        else
-        {
-            Instantiate(cubePrefab, spawnpoint);
-            _time = 1;
-        }
+            Random rnd = new Random();
+            float random = rnd.Next(-25, 25);
+            if (_objects[i].transform.position.y < -6)
+            {
+                _objects[i].transform.position = new Vector3(random / 10, 6);
+            }
+        }    
     }
     
     
