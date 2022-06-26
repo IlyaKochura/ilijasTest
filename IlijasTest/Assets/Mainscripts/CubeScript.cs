@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeScript : MonoBehaviour
+
+namespace Mainscripts
 {
-    public float speed;
-    
-    void Update()
+    public class CubeScript : MonoBehaviour
     {
-        Vector3 direction = new Vector3( 0, -1 * speed * Time.deltaTime);
-        transform.Translate(direction);
+        public float speed;
+
+        void Update()
+        {
+            Vector3 direction = new Vector3(0, -1 * speed * Time.deltaTime);
+            transform.Translate(direction);
+        }
     }
 }

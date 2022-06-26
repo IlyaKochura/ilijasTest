@@ -1,45 +1,42 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+namespace Mainscripts
 {
-    public float speed;
-    
-    void Update()
+    public class Hero : MonoBehaviour
     {
-        Move();
-    }
-
-    private void Move()
-    {
-        var axis = Input.GetAxis("Horizontal");
-        Vector3 direction = new Vector3(axis * speed * Time.deltaTime, 0);
-        transform.Translate(direction);
-        MovingEdgesScene();
-    }
-    
-    private void MovingEdgesScene()
-    {
-
-        if (transform.position.x < -2.5f)
+        public float speed;
+        void Update()
         {
-            transform.position = new Vector3(2.5f, transform.position.y, 0);
+            Move();
         }
-            
-        if (transform.position.x > 2.5f)
-        {
-            transform.position = new Vector3(-2.5f, transform.position.y, 0);
-        }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
+        private void Move()
         {
-            Time.timeScale = 0;
+            var axis = Input.GetAxis("Horizontal");
+            Vector3 direction = new Vector3(axis * speed * Time.deltaTime, 0);
+            transform.Translate(direction);
+            MovingEdgesScene();
+        }
+
+        private void MovingEdgesScene()
+        {
+            if (transform.position.x < -2.5f)
+            {
+                transform.position = new Vector3(2.5f, transform.position.y, 0);
+            }
+
+            if (transform.position.x > 2.5f)
+            {
+                transform.position = new Vector3(-2.5f, transform.position.y, 0);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                Time.timeScale = 0;
+            }
         }
     }
 }
-

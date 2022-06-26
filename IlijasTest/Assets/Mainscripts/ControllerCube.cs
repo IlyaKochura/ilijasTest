@@ -1,41 +1,77 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
-public class ControllerCube : MonoBehaviour
+namespace Mainscripts
 {
-    public GameObject cubePrefab;
-    private Vector3 _spawnpoint;
-    private List<GameObject> _objects = new();
-    
-    
-    void Start()
+    public class ControllerCube : MonoBehaviour
     {
-        Random rnd = new Random();
-        _spawnpoint = new Vector3(0, 6);
-        for (int i = 0; i < 3; i++)
+        [Header("Назначалки")] [SerializeField]
+        private GameObject cubePrefab;
+
+        [SerializeField] private ButtonScript menuButton;
+        [SerializeField] private TextMeshProUGUI score;
+        [SerializeField] private ButtonScript restartButton;
+
+        [Header("Скорость пуль")] [SerializeField]
+        private int lowSpeedBorder;
+
+        [SerializeField] private int highSpeedBorder;
+        private int _score = 0;
+        private Vector3 _spawnpoint;
+        private List<GameObject> _objects = new();
+
+
+
+        void Start()
         {
-            float random = rnd.Next(10, 20);
-            var slot = Instantiate(cubePrefab, _spawnpoint, Quaternion.identity);
-            _objects.Add(slot);
-            _objects[i].GetComponent<CubeScript>().speed = random;
-        }
-    }
-    
-    void Update()
-    {
-        for (int i = 0; i < _objects.Count; i++)
-        {
+            menuButton.Action = () => GoToMenu();
+            restartButton.Action = () => RestartGame();
+
             Random rnd = new Random();
-            float random = rnd.Next(-25, 25);
-            if (_objects[i].transform.position.y < -6)
+            for (int i = 0; i < 3; i++)
             {
-                _objects[i].transform.position = new Vector3(random / 10, 6);
+                float random = rnd.Next(-25, 25);
+                _spawnpoint = new Vector3(random / 10, 6);
+                var slot = Instantiate(cubePrefab, _spawnpoint, Quaternion.identity);
+                _objects.Add(slot);
+                float randomSpeed = rnd.Next(lowSpeedBorder, highSpeedBorder);
+                _objects[i].GetComponent<CubeScript>().speed = randomSpeed;
             }
-        }    
+        }
+
+        void Update()
+        {
+            for (int i = 0; i < _objects.Count; i++)
+            {
+                Random rnd = new Random();
+                float random = rnd.Next(-25, 25);
+                if (_objects[i].transform.position.y < -6)
+                {
+                    float randomSpeed = rnd.Next(lowSpeedBorder, highSpeedBorder);
+                    _objects[i].transform.position = new Vector3(random / 10, 6);
+                    _objects[i].GetComponent<CubeScript>().speed = randomSpeed;
+                    _score++;
+                }
+            }
+
+            score.text = Convert.ToString(_score);
+        }
+
+        private void GoToMenu()
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        private void RestartGame()
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(1);
+        }
+
+
     }
-    
-    
 }
