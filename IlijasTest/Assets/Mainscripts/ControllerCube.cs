@@ -9,17 +9,17 @@ namespace Mainscripts
 {
     public class ControllerCube : MonoBehaviour
     {
-        [Header("Назначалки")] [SerializeField]
-        private GameObject cubePrefab;
-
+        [Header("Назначалки")] 
+        [SerializeField] private GameObject cubePrefab;
         [SerializeField] private ButtonScript menuButton;
         [SerializeField] private TextMeshProUGUI score;
         [SerializeField] private ButtonScript restartButton;
 
-        [Header("Скорость пуль")] [SerializeField]
-        private int lowSpeedBorder;
-
+        [Header("Настроечки")] 
+        [SerializeField] private int countBlast;
+        [SerializeField] private int lowSpeedBorder;
         [SerializeField] private int highSpeedBorder;
+        
         private int _score = 0;
         private Vector3 _spawnpoint;
         private List<GameObject> _objects = new();
@@ -32,7 +32,7 @@ namespace Mainscripts
             restartButton.Action = () => RestartGame();
 
             Random rnd = new Random();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < countBlast; i++)
             {
                 float random = rnd.Next(-25, 25);
                 _spawnpoint = new Vector3(random / 10, 6);
